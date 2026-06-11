@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Ucapan Romantis 💖</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #1aa516, #ffe6f0);
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #cc0066;
+            margin-top: 80px;
+        }
+
+        h2 {
+            color: #99004d;
+        }
+
+        p {
+            font-size: 20px;
+            color: #333;
+            margin: 20px;
+        }
+
+        .card {
+            background: white;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .heart {
+            position: fixed;
+            top: -10px;
+            color: red;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+        <h1>💖 PC 1 💖</h1>
+
+    <h1>💖 Server 3 💖</h1>
+
+    <h2>Untuk <span style="color:#992424;">IRVINNN ❤️ AZAAAA</span></h2>
+
+    <p>
+        Akhirnya kalian resmi memulai cerita baru 🌸<br><br>
+        Semoga setiap langkah kalian selalu seirama,<br>
+        saling menguatkan dalam keadaan apapun,<br>
+        dan tetap bertahan meskipun dunia sedang tidak baik-baik saja 💕
+    </p>
+
+    <p>
+        Ingat ya...<br>
+        hubungan yang indah bukan tentang siapa yang sempurna,<br>
+        tapi tentang dua orang yang saling menerima dan berjuang bersama ✨
+    </p>
+
+    <p style="margin-top:30px; color:#666;">
+        Semoga langgeng, bahagia selalu,<br>
+        dan penuh cerita indah ke depannya 💫
+    </p>
+
+    <h3 style="color:#cc0066;">
+        Dari: Teman yang ikut bahagia 😊
+    </h3>
+</div>
+
+<script>
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>

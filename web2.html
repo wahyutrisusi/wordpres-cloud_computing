@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Undangan Pernikahan 💖</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #1d2baf, #ffe6f0);
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #cc0066;
+            margin-top: 60px;
+        }
+
+        h2 {
+            color: #99004d;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin: 15px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 500px;
+        }
+
+        .heart {
+            position: fixed;
+            top: -10px;
+            color: red;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>💖 PC 1 💖</h1>
+    <h1>💖 Undangan Pernikahan 💖</h1>
+
+    <p>
+        Dengan memohon rahmat dan ridho Allah SWT,<br>
+        kami bermaksud menyelenggarakan pernikahan:
+    </p>
+
+    <h2>
+        Abdul Aziz ❤️ Aafiyaah
+    </h2>
+
+    <p>
+        Yang InsyaAllah akan dilaksanakan pada:
+    </p>
+
+    <p>
+        <b>Hari/Tanggal:</b> Sabtu, 20 Mei 2026<br>
+        <b>Waktu:</b> 10.00 WIB - Selesai<br>
+        <b>Tempat:</b> Gedung Serbaguna Bahagia
+    </p>
+
+    <p>
+        Merupakan suatu kehormatan dan kebahagiaan bagi kami<br>
+        apabila Bapak/Ibu/Saudara/i berkenan hadir<br>
+        untuk memberikan doa restu kepada kedua mempelai.
+    </p>
+
+    <p style="margin-top:20px;">
+        Atas kehadiran dan doa restunya,<br>
+        kami ucapkan terima kasih 💕
+    </p>
+
+    <h3 style="color:#00cc4e;">
+        Wassalamu’alaikum Warahmatullahi Wabarakatuh
+    </h3>
+
+</div>
+
+<script>
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
