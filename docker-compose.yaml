@@ -1,51 +1,70 @@
-version: '3.8'
-
 services:
-  web:
-    image: nginx:latest
-    container_name: web_server
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./myvol:/usr/share/nginx/html
-      - ./logs:/var/log/nginx
-    networks:
-      - frontend-net
-      - backend-net
-    depends_on:
-      - api
-
-  api:
-    image: node:18
-    container_name: api_engine
-    working_dir: /app
-    volumes:
-      - ./app:/app
-      - ./logs:/app/logs
-    command: "node index.js"
-    networks:
-      - frontend-net
-      - backend-net
-    env_file:
-      - .env
 
   db:
-    image: mysql:8
-    container_name: database
-    volumes:
-      - db-data:/var/lib/mysql
+    image: mariadb:11
+    container_name: wordpress-db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend-net
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress-app
+    restart: always
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - frontend-net
+      - backend-net
+
+  redis:
+    image: redis:latest
+    container_name: redis-cache
+    restart: always
+    networks:
+      - backend-net
+
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio-storage
+    command: server /data --console-address ":9001"
+    restart: always
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
     networks:
       - backend-net
 
 volumes:
-  db-data:
+  db_data:
+  wordpress_data:
+  minio_data:
 
 networks:
   frontend-net:
+    driver: bridge
+
   backend-net:
+    driver: bridge

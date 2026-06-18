@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: web_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./myvol:/usr/share/nginx/html
+      - ./logs:/var/log/nginx
+    networks:
+      - frontend-net
+      - backend-net
+    depends_on:
+      - api
+
+  api:
+    image: node:18
+    container_name: api_engine
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - ./logs:/app/logs
+    command: "node index.js"
+    networks:
+      - frontend-net
+      - backend-net
+    env_file:
+      - .env
+
+  db:
+    image: mysql:8
+    container_name: database
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - backend-net
+
+volumes:
+  db-data:
+
+networks:
+  frontend-net:
+  backend-net:
