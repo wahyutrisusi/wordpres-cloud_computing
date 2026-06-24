@@ -4,6 +4,8 @@ services:
     image: mariadb:11
     container_name: wordpress-db
     restart: always
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -23,6 +25,8 @@ services:
       - redis
     ports:
       - "8080:80"
+    env_file:
+      - .env
     environment:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
@@ -38,6 +42,9 @@ services:
     image: redis:latest
     container_name: redis-cache
     restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
     networks:
       - backend-net
 
@@ -46,6 +53,8 @@ services:
     container_name: minio-storage
     command: server /data --console-address ":9001"
     restart: always
+    env_file:
+      - .env
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -61,6 +70,7 @@ volumes:
   db_data:
   wordpress_data:
   minio_data:
+  redis_data:
 
 networks:
   frontend-net:
